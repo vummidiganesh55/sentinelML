@@ -1005,44 +1005,41 @@ The Random Forest model uses class balancing to address the failure-class imbala
 
 # 📸 Screenshots / Demo
 
-## Grafana Monitoring Dashboard
+## 📸 Screenshots / Demo
 
-### Grafana Production Monitoring
+### 🚀 FastAPI Swagger UI
 
-The Grafana dashboard provides real-time visibility into prediction requests, machine failure predictions, prediction latency, and API errors.
+FastAPI provides interactive API documentation for the SentinelML prediction and monitoring endpoints.
 
-![SentinelML Grafana Dashboard](docs/images/grafana-dashboard.png)
----
+![SentinelML FastAPI Swagger UI](docs/images/fastapi-swagger.png)
 
-## Prometheus Monitoring
 
-Add your Prometheus screenshot here:
+### 📊 Grafana Production Monitoring
 
-```text
-docs/images/prometheus.png
-```
+Grafana dashboard visualizing prediction requests, machine failure predictions, prediction latency, and API errors.
 
----
+![SentinelML Grafana Production Monitoring](docs/images/grafana-dashboard.png)
 
-## API Documentation
 
-Add your FastAPI Swagger screenshot here:
+### 🔍 Prometheus Monitoring
 
-```text
-docs/images/fastapi-swagger.png
-```
+Prometheus monitors the SentinelML API and confirms that the `sentinelml-api` target is healthy and available for metric scraping.
 
----
+![SentinelML Prometheus Monitoring](docs/images/prometheus-monitoring.png)
 
-## Incident Pipeline
 
-Add your incident pipeline screenshot here:
+### 🤖 AI RCA & Self-Healing Pipeline
 
-```text
-docs/images/incident-pipeline.png
-```
+The SentinelML incident pipeline detects data drift, collects evidence, performs AI-driven root cause analysis, evaluates the policy, executes the approved healing action, and verifies recovery.
 
----
+![SentinelML AI RCA and Self-Healing Pipeline](docs/images/self-healing-pipeline.png)
+
+
+### 🔄 Complete Self-Healing Execution
+
+End-to-end execution showing drift detection, incident creation, AI RCA, policy decision, data quarantine, and successful recovery verification.
+
+![SentinelML Complete Self-Healing Execution](docs/images/self-healing-pipeline-complete.png)
 
 # ⚡ Performance
 
