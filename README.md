@@ -12,6 +12,7 @@ SentinelML is an MLOps platform designed to monitor a production machine-learnin
 ---
 
 ## Architecture
+
 ```mermaid
 flowchart TD
     A[ML Training] --> B[Validated Model]
@@ -44,56 +45,6 @@ flowchart TD
 
     Q --> S[Grafana]
 ```
-```text
-                         SENTINELML
-                              │
-                              ▼
-                       ┌─────────────┐
-                       │   FastAPI   │
-                       │  /predict   │
-                       └──────┬──────┘
-                              │
-                              ▼
-                        ML Prediction
-                              │
-                    ┌─────────┴─────────┐
-                    ▼                   ▼
-               Telemetry            PostgreSQL
-                    │
-                    ▼
-             Monitoring Engine
-                    │
-              ┌─────┴─────┐
-              ▼           ▼
-            Drift       API Failure
-              │           │
-              └─────┬─────┘
-                    ▼
-             Incident Engine
-                    │
-                    ▼
-            Evidence Collector
-                    │
-                    ▼
-                 AI RCA
-             Ollama / Qwen
-                    │
-                    ▼
-              Policy Engine
-                    │
-                    ▼
-            Self-Healing Layer
-                    │
-                    ▼
-                Verification
-                 /        \
-             Success      Failed
-                │            │
-                ▼            ▼
-             Resume      Human Alert
-````
-
----
 
 ## Problem Statement
 
