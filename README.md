@@ -12,6 +12,7 @@ SentinelML is an MLOps platform designed to monitor a production machine-learnin
 ---
 
 ## Architecture
+```mermaid
 flowchart TD
     A[ML Training] --> B[Validated Model]
     B --> C[FastAPI Prediction API]
@@ -42,6 +43,7 @@ flowchart TD
     R --> I
 
     Q --> S[Grafana]
+```
 ```text
                          SENTINELML
                               │
