@@ -1007,18 +1007,11 @@ The Random Forest model uses class balancing to address the failure-class imbala
 
 ## Grafana Monitoring Dashboard
 
-Add your Grafana screenshot here:
+### Grafana Production Monitoring
 
-```text
-docs/images/grafana-dashboard.png
-```
+The Grafana dashboard provides real-time visibility into prediction requests, machine failure predictions, prediction latency, and API errors.
 
-Example Markdown:
-
-```markdown
 ![SentinelML Grafana Dashboard](docs/images/grafana-dashboard.png)
-```
-
 ---
 
 ## Prometheus Monitoring
