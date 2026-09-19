@@ -1,0 +1,44 @@
+groups:
+  - name: sentinelml-alerts
+
+    rules:
+
+      - alert: SentinelMLAPIDown
+        expr: up{job="sentinelml-api"} == 0
+        for: 1m
+
+        labels:
+          severity: critical
+
+        annotations:
+          summary: "SentinelML API is down"
+          description: "The SentinelML API has been unavailable for more than 1 minute."
+
+
+      - alert: SentinelMLAPIErrors
+        expr: rate(sentinelml_api_errors_total[5m]) > 0
+        for: 1m
+
+        labels:
+          severity: warning
+
+        annotations:
+          summary: "SentinelML API errors detected"
+          description: "SentinelML API errors have been detected during the last 5 minutes."
+
+
+      - alert: SentinelMLHighLatency
+        expr: |
+          histogram_quantile(
+            0.95,
+            rate(sentinelml_prediction_latency_seconds_bucket[5m])
+          ) > 1
+
+        for: 2m
+
+        labels:
+          severity: warning
+
+        annotations:
+          summary: "SentinelML prediction latency is high"
+          description: "95th percentile prediction latency is above 1 second."

@@ -1,0 +1,88 @@
+services:
+
+  # =====================================================
+  # SENTINELML FASTAPI
+  # =====================================================
+  api:
+    image: sentinelml-api:latest
+    container_name: sentinelml-api
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql+psycopg2://sentinel:sentinel_password@postgres:5432/sentinelml
+      OLLAMA_URL: http://host.docker.internal:11434/api/generate
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # =====================================================
+  # POSTGRESQL
+  # =====================================================
+  postgres:
+    image: postgres:16
+    container_name: sentinelml-postgres
+    environment:
+      POSTGRES_DB: sentinelml
+      POSTGRES_USER: sentinel
+      POSTGRES_PASSWORD: sentinel_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sentinel -d sentinelml"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # =====================================================
+  # PROMETHEUS
+  # =====================================================
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: sentinelml-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./monitoring/alert_rules.yml:/etc/prometheus/alert_rules.yml:ro
+    depends_on:
+      - api
+
+  # =====================================================
+  # ALERTMANAGER
+  # =====================================================
+  alertmanager:
+    image: prom/alertmanager:latest
+    container_name: sentinelml-alertmanager
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./monitoring/alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+    command:
+      - "--config.file=/etc/alertmanager/alertmanager.yml"
+    depends_on:
+      - prometheus
+
+  # =====================================================
+  # GRAFANA
+  # =====================================================
+  grafana:
+    image: grafana/grafana:latest
+    container_name: sentinelml-grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
+    volumes:
+      - grafana_data:/var/lib/grafana
+
+volumes:
+  postgres_data:
+  grafana_data:
