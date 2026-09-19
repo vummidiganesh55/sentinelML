@@ -12,7 +12,36 @@ SentinelML is an MLOps platform designed to monitor a production machine-learnin
 ---
 
 ## Architecture
+flowchart TD
+    A[ML Training] --> B[Validated Model]
+    B --> C[FastAPI Prediction API]
 
+    C --> D[Telemetry]
+    C --> E[PostgreSQL]
+
+    D --> F[Monitoring Engine]
+    F --> G[Drift Detection]
+    F --> H[API Metrics]
+
+    G --> I[Incident Engine]
+    H --> I
+
+    I --> J[Evidence Collector]
+    J --> K[AI RCA - Ollama / Qwen]
+
+    K --> L[Policy Engine]
+    L --> M[Self-Healing Executor]
+
+    M --> N[Recovery Verification]
+
+    N -->|Recovered| O[Resume Service]
+    N -->|Failed| P[Human Investigation]
+
+    H --> Q[Prometheus]
+    Q --> R[Alertmanager]
+    R --> I
+
+    Q --> S[Grafana]
 ```text
                          SENTINELML
                               │
